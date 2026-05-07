@@ -13,8 +13,8 @@
     },
     "android": {
       "adaptiveIcon": {
-        "backgroundColor": "#0A0F1E",
-        "foregroundImage": "./assets/images/Logo.png"
+        "foregroundImage": "./assets/images/LogoIcon.png",
+        "backgroundColor": "#0A0F1E"
       },
       "softwareKeyboardLayoutMode": "resize",
       "edgeToEdgeEnabled": true,
