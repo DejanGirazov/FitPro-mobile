@@ -11,6 +11,7 @@ const COUNTDOWN_NOTIFICATION_ID = "rest-timer-countdown";
 export function useTimerNotification() {
   // Call once to set up the Android notification channel
   const setupChannel = async () => {
+    await notifee.requestPermission();
     await notifee.createChannel({
       id: CHANNEL_ID,
       name: "Rest Timer",
