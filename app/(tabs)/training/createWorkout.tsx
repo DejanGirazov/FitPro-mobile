@@ -3,7 +3,9 @@ import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useState } from "react";
 import {
   ActivityIndicator,
+  KeyboardAvoidingView,
   Modal,
+  Platform,
   ScrollView,
   Text,
   TextInput,
@@ -11,8 +13,8 @@ import {
   View,
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { API_URL } from "../../constants/api";
-import exercises from "./../data/exercises.json";
+import { API_URL } from "../../../constants/api";
+import exercises from "../../data/exercises.json";
 
 const getWorkouts = async () => {
   const res = await fetch(`${API_URL}/api/workout/getWorkouts`);
@@ -169,12 +171,14 @@ const CreateWorkoutPage = () => {
         transparent={true}
         onRequestClose={() => setCreateModalVisible(false)}
       >
-        <View
+        <KeyboardAvoidingView
+          behavior="padding"
           style={{
             flex: 1,
             backgroundColor: "rgba(0,0,0,0.7)",
             justifyContent: "flex-end",
           }}
+          keyboardVerticalOffset={Platform.OS === "ios" ? 0 : 25}
         >
           <View
             className="bg-[#0A0F1E] rounded-t-3xl p-6"
@@ -269,7 +273,7 @@ const CreateWorkoutPage = () => {
               </TouchableOpacity>
             </View>
           </View>
-        </View>
+        </KeyboardAvoidingView>
       </Modal>
 
       {/* Edit Workout Modal */}

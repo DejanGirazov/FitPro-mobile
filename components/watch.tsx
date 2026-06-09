@@ -28,10 +28,14 @@ const StopWatch = ({ shouldStart, onTimeUpdate }: any) => {
 
   return (
     <View className="items-center">
-      <Text className="text-white text-xl font-bold text-left mb-1">
-        Total workout time
-      </Text>
-      <Text className="text-[#00BFFF] text-lg font-bold">
+      <Text
+        className="text-[#00BFFF] font-bold"
+        style={{
+          fontSize: 37,
+          letterSpacing: 2,
+          fontVariant: ["tabular-nums"],
+        }}
+      >
         {String(minutes).padStart(2, "0")}:{String(seconds).padStart(2, "0")}
       </Text>
     </View>
@@ -103,21 +107,31 @@ const Timer = ({ expirySeconds }: any) => {
 
   return (
     <View className="items-center">
-      <Text className="text-white text-lg font-bold mb-2">
+      <Text
+        style={{
+          fontSize: 37,
+          fontWeight: "bold",
+          letterSpacing: 2,
+          color: minutes === 0 && seconds <= 10 ? "#ef4444" : "#00BFFF",
+          fontVariant: ["tabular-nums"],
+        }}
+      >
         {String(minutes).padStart(2, "0")}:{String(seconds).padStart(2, "0")}
       </Text>
-      <View className="flex-row gap-2">
+      <View className="flex-row gap-3 mt-3">
         <TouchableOpacity
           onPress={handleStart}
-          className="bg-[#1C2A4A] p-2 rounded-lg"
+          className="bg-[#00BFFF] px-6 py-3 rounded-xl flex-row items-center gap-2"
         >
-          <Ionicons name="play" size={20} color="#00BFFF" />
+          <Ionicons name="play" size={18} color="white" />
+          <Text className="text-white font-bold">Start</Text>
         </TouchableOpacity>
         <TouchableOpacity
           onPress={handlePause}
-          className="bg-[#1C2A4A] p-2 rounded-lg"
+          className="bg-[#0A0F1E] px-6 py-3 rounded-xl flex-row items-center gap-2"
         >
-          <Ionicons name="pause" size={20} color="#00BFFF" />
+          <Ionicons name="pause" size={18} color="#00BFFF" />
+          <Text className="text-[#00BFFF] font-bold">Pause</Text>
         </TouchableOpacity>
       </View>
     </View>

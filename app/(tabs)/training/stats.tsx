@@ -9,8 +9,8 @@ import {
   View,
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { API_URL } from "../../constants/api";
-import WorkoutChart from "../components/WorkoutChart";
+import WorkoutChart from "../../../components/WorkoutChart";
+import { API_URL } from "../../../constants/api";
 
 const getLogs = async () => {
   const res = await fetch(`${API_URL}/api/workout/getLogs`);

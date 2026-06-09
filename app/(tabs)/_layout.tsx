@@ -24,21 +24,21 @@ const _layout = () => {
       }}
     >
       <Tabs.Screen
-        name="stats"
+        name="home"
         options={{
-          title: "Stats",
+          title: "Home",
           headerShown: false,
           tabBarIcon: ({ color }) => (
             <>
-              <Ionicons name="bar-chart" size={24} color={color} />
+              <Ionicons name="home-outline" size={24} color={color} />
             </>
           ),
         }}
       />
       <Tabs.Screen
-        name="startWorkout"
+        name="training/index"
         options={{
-          title: "Start Workout",
+          title: "Training",
           headerShown: false,
           tabBarIcon: ({ color }) => (
             <>
@@ -47,29 +47,28 @@ const _layout = () => {
           ),
         }}
       />
+      <Tabs.Screen name="training/startWorkout" options={{ href: null }} />
+      <Tabs.Screen name="training/createWorkout" options={{ href: null }} />
+      <Tabs.Screen name="training/stats" options={{ href: null }} />
       <Tabs.Screen
-        name="createWorkout"
+        name="nutrition"
         options={{
-          title: "Create Workout",
+          title: "Nutrition",
           headerShown: false,
           tabBarIcon: ({ color }) => (
             <>
-              <Ionicons name="create-outline" size={24} color={color} />
+              <Ionicons name="nutrition-outline" size={24} color={color} />
             </>
           ),
         }}
       />
       <Tabs.Screen
-        name="profile"
+        name="cardio"
         options={{
-          title: "Profile",
+          title: "Cardio",
           headerShown: false,
           tabBarIcon: ({ focused, color }) => (
-            <Ionicons
-              name={focused ? "person" : "person-outline"}
-              size={24}
-              color={color}
-            />
+            <Ionicons name="bicycle-outline" size={24} color={color} />
           ),
         }}
       />

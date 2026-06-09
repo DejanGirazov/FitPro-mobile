@@ -11,8 +11,8 @@ import {
   View,
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { API_URL } from "../../constants/api";
-import { StopWatch, Timer } from "../components/watch";
+import { StopWatch, Timer } from "../../../components/watch";
+import { API_URL } from "../../../constants/api";
 
 const getWorkouts = async () => {
   const res = await fetch(`${API_URL}/api/workout/getWorkouts`);
@@ -123,21 +123,39 @@ const StartWorkoutPage = () => {
 
         {/* Rest Time */}
         {isWorkoutSelected && (
-          <View className="bg-[#1C2A4A] p-4 rounded-xl mb-4 flex ">
-            <StopWatch
-              shouldStart={selectedWorkout}
-              onTimeUpdate={setTotalTime}
-            />
-            <View className="flex-row items-center justify-between mt-4">
-              <Text className="text-white font-bold">Rest Time (seconds):</Text>
-              <TextInput
-                keyboardType="numeric"
-                value={String(restTime)}
-                onChangeText={(text) => setRestTime(parseInt(text) || 0)}
-                className="bg-[#0A0F1E] text-white p-2 rounded-lg w-20 text-center"
+          <View className="bg-[#1C2A4A] p-5 rounded-xl mb-4">
+            {/* Stopwatch */}
+            <View
+              className="items-center mb-5 pb-5"
+              style={{ borderBottomWidth: 1, borderBottomColor: "#ffffff15" }}
+            >
+              <Text className="text-[#8E8E93] text-xs tracking-widest uppercase mb-2">
+                Workout Duration
+              </Text>
+              <StopWatch
+                shouldStart={selectedWorkout}
+                onTimeUpdate={setTotalTime}
               />
             </View>
-            <Timer expirySeconds={restTime} />
+
+            {/* Rest Timer */}
+            <View className="items-center">
+              <Text className="text-[#8E8E93] text-xs tracking-widest uppercase mb-3">
+                Rest Timer
+              </Text>
+              <Timer expirySeconds={restTime} />
+              <View className="flex-row items-center gap-3 mt-4">
+                <Text className="text-[#8E8E93] text-sm">
+                  Rest duration (sec):
+                </Text>
+                <TextInput
+                  keyboardType="numeric"
+                  value={String(restTime)}
+                  onChangeText={(text) => setRestTime(parseInt(text) || 0)}
+                  className="bg-[#0A0F1E] text-white p-2 rounded-lg w-20 text-center"
+                />
+              </View>
+            </View>
           </View>
         )}
         {/* Current Exercise */}

@@ -4,7 +4,7 @@ import {
   useQuery,
 } from "@tanstack/react-query";
 import { Stack, useRouter, useSegments } from "expo-router";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { ActivityIndicator, View } from "react-native";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 import { API_URL } from "../constants/api";
@@ -15,6 +15,7 @@ const queryClient = new QueryClient();
 function RootLayoutNav() {
   const router = useRouter();
   const segments = useSegments();
+  const [mounted, setMounted] = useState(false);
 
   const { data: authUser, isLoading } = useQuery({
     queryKey: ["authUser"],
@@ -31,8 +32,12 @@ function RootLayoutNav() {
     },
     retry: false,
   });
+  useEffect(() => {
+    setMounted(true); // ← mark as mounted
+  }, []);
 
   useEffect(() => {
+    if (!mounted) return;
     if (isLoading) return;
 
     const inTabsGroup = segments[0] === "(tabs)";
@@ -40,7 +45,7 @@ function RootLayoutNav() {
     if (!authUser && inTabsGroup) {
       router.replace("/login" as any);
     } else if (authUser && !inTabsGroup) {
-      router.replace("/(tabs)/startWorkout" as any);
+      router.replace("/(tabs)/home" as any);
     }
   }, [authUser, isLoading, segments]);
 

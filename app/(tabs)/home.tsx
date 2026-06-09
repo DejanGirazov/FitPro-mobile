@@ -12,8 +12,8 @@ import {
   View,
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
+import BmiScale from "../../components/bmi";
 import { API_URL } from "../../constants/api";
-import BmiScale from "../components/bmi";
 
 export default function ProfilePage() {
   const queryClient = useQueryClient();

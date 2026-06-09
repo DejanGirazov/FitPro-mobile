@@ -27,7 +27,6 @@ export function useTimerNotification() {
 
     await notifee.displayNotification({
       id: COUNTDOWN_NOTIFICATION_ID,
-      title: "🏋️ FitPro — Rest Timer",
       body: "Rest timer running...",
       android: {
         channelId: CHANNEL_ID,
@@ -88,3 +87,4 @@ export function useTimerNotification() {
     cancelNotifications,
   };
 }
+export default useTimerNotification;
