@@ -1,7 +1,9 @@
 import FoodDetailModal from "@/components/FoodDetailModal";
 import FoodResultCard from "@/components/foodResultCard";
+import FoodResultCardSkeleton from "@/components/FoodResultCardSkeleton";
 import MacroPieChart from "@/components/MacroPieChart";
 import MealCard from "@/components/mealCard";
+import MealCardSkeleton from "@/components/MealCardSkeleton";
 import Ionicons from "@expo/vector-icons/Ionicons";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import React, { useState } from "react";
@@ -159,7 +161,11 @@ const Nutrition = () => {
           />
         )}
         {isLoading ? (
-          <Text className="text-white text-center">Loading...</Text>
+          <>
+            <MealCardSkeleton />
+            <MealCardSkeleton />
+            <MealCardSkeleton />
+          </>
         ) : isError ? (
           <Text className="text-red-500 text-center">Error loading meals</Text>
         ) : todaysMeals?.length === 0 ? (
@@ -333,7 +339,9 @@ const Nutrition = () => {
               <ScrollView style={{ maxHeight: 220 }}>
                 {isSearching ? (
                   <Text className="text-[#8E8E93] text-center">
-                    Searching...
+                    <FoodResultCardSkeleton />
+                    <FoodResultCardSkeleton />
+                    <FoodResultCardSkeleton />
                   </Text>
                 ) : (
                   searchResults?.map((food: any) => (

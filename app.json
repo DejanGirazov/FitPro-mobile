@@ -19,7 +19,7 @@
       "softwareKeyboardLayoutMode": "resize",
       "edgeToEdgeEnabled": true,
       "predictiveBackGestureEnabled": false,
-      "package": "com.dejan4577.FitPro.preview",
+      "package": "com.dejan4577.FitPro",
       "newArchEnabled": true,
       "permissions": [
         "android.permission.POST_NOTIFICATIONS",

@@ -84,9 +84,6 @@ const StatsPage = () => {
               className="bg-[#1C2A4A] rounded-xl p-4 items-center justify-center"
               style={{
                 width: "47%",
-                borderLeftWidth: 4,
-                borderBottomWidth: 4,
-                borderColor: "#00BFFF",
               }}
             >
               <Text className="text-[#8E8E93] text-xs text-center mb-1">
@@ -159,7 +156,6 @@ const StatsPage = () => {
               setExpandedLog(expandedLog === workout._id ? null : workout._id)
             }
             className="bg-[#1C2A4A] rounded-xl p-4 mb-3"
-            style={{ borderLeftWidth: 4, borderColor: "#00BFFF" }}
           >
             <View className="flex-row justify-between items-center">
               <View>

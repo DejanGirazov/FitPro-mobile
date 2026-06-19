@@ -12,8 +12,8 @@ import {
   View,
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
-import BmiScale from "../../components/bmi";
-import { API_URL } from "../../constants/api";
+import BmiScale from "../../../components/bmi";
+import { API_URL } from "../../../constants/api";
 
 export default function ProfilePage() {
   const queryClient = useQueryClient();
@@ -78,47 +78,6 @@ export default function ProfilePage() {
     if (bmi < 30) return "#f97316"; // orange - overweight
     return "#E63946"; // red - obese
   };
-
-  const calculateCalories = () => {
-    if (
-      !authUser?.weight ||
-      !authUser?.height ||
-      !authUser?.age ||
-      !authUser?.gender
-    )
-      return null;
-
-    // Step 1 - BMR
-    let bmr;
-    if (authUser.gender === "male") {
-      bmr =
-        88.36 +
-        13.4 * authUser.weight +
-        4.8 * authUser.height -
-        5.7 * authUser.age;
-    } else {
-      bmr =
-        447.6 +
-        9.2 * authUser.weight +
-        3.1 * authUser.height -
-        4.3 * authUser.age;
-    }
-
-    // Step 2 - TDEE
-    const multipliers: any = {
-      sedentary: 1.2,
-      moderate: 1.55,
-      active: 1.9,
-    };
-    const tdee = bmr * (multipliers[authUser.activityLevel] || 1.2);
-
-    // Step 3 - Goal adjustment
-    if (authUser.goal === "lose weight") return Math.round(tdee - 500);
-    if (authUser.goal === "build muscle") return Math.round(tdee + 300);
-    return Math.round(tdee);
-  };
-
-  const dailyCalories = calculateCalories();
 
   return (
     <SafeAreaView className="flex-1 bg-[#0A0F1E] p-6">
@@ -380,16 +339,6 @@ export default function ProfilePage() {
               </TouchableOpacity>
             ))}
           </View>
-        </View>
-        <View className="bg-[#1C2A4A] p-4 rounded-xl mt-6">
-          <Text className="text-white text-lg font-bold mb-4 uppercase tracking-widest">
-            Daily Calorie Target
-          </Text>
-          <Text className="text-white text-2xl font-bold">
-            {dailyCalories
-              ? `${dailyCalories} kcal`
-              : "Enter your goal and activity level to calculate"}
-          </Text>
         </View>
 
         <TouchableOpacity

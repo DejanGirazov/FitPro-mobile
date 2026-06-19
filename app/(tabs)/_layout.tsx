@@ -24,7 +24,7 @@ const _layout = () => {
       }}
     >
       <Tabs.Screen
-        name="home"
+        name="home/index"
         options={{
           title: "Home",
           headerShown: false,
@@ -35,6 +35,8 @@ const _layout = () => {
           ),
         }}
       />
+      <Tabs.Screen name="home/profile" options={{ href: null }} />
+      <Tabs.Screen name="home/details" options={{ href: null }} />
       <Tabs.Screen
         name="training/index"
         options={{
@@ -63,7 +65,7 @@ const _layout = () => {
         }}
       />
       <Tabs.Screen
-        name="cardio"
+        name="cardio/index"
         options={{
           title: "Cardio",
           headerShown: false,
@@ -72,6 +74,8 @@ const _layout = () => {
           ),
         }}
       />
+      <Tabs.Screen name="cardio/startSession" options={{ href: null }} />
+      <Tabs.Screen name="cardio/stats" options={{ href: null }} />
     </Tabs>
   );
 };

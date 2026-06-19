@@ -41,13 +41,25 @@ function RootLayoutNav() {
     if (isLoading) return;
 
     const inTabsGroup = segments[0] === "(tabs)";
+    const inOnboarding = (segments[0] as any) === "onboarding";
+
+    const needsOnboarding =
+      authUser &&
+      (!authUser.age ||
+        !authUser.height ||
+        !authUser.weight ||
+        !authUser.gender ||
+        !authUser.goal ||
+        !authUser.activityLevel);
 
     if (!authUser && inTabsGroup) {
       router.replace("/login" as any);
-    } else if (authUser && !inTabsGroup) {
+    } else if (authUser && needsOnboarding && !inOnboarding) {
+      router.replace("/onboarding" as any);
+    } else if (authUser && !needsOnboarding && !inTabsGroup) {
       router.replace("/(tabs)/home" as any);
     }
-  }, [authUser, isLoading, segments]);
+  }, [authUser, isLoading, segments, mounted]);
 
   if (isLoading) {
     return (
@@ -69,6 +81,7 @@ function RootLayoutNav() {
       <Stack.Screen name="(tabs)" />
       <Stack.Screen name="login" />
       <Stack.Screen name="signUp" />
+      <Stack.Screen name="onboarding" />
     </Stack>
   );
 }

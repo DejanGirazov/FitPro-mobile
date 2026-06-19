@@ -297,5 +297,286 @@
     "name": "Machine Shoulder Press",
     "bodyPart": "shoulders",
     "equipment": "machine"
+  },
+
+  {
+    "id": "55",
+    "name": "Chest Press Machine",
+    "bodyPart": "chest",
+    "equipment": "machine"
+  },
+  {
+    "id": "56",
+    "name": "Pec Deck Fly",
+    "bodyPart": "chest",
+    "equipment": "machine"
+  },
+  {
+    "id": "57",
+    "name": "Smith Machine Bench Press",
+    "bodyPart": "chest",
+    "equipment": "machine"
+  },
+
+  {
+    "id": "58",
+    "name": "Machine Row",
+    "bodyPart": "back",
+    "equipment": "machine"
+  },
+  {
+    "id": "59",
+    "name": "Chest Supported Row",
+    "bodyPart": "back",
+    "equipment": "machine"
+  },
+  {
+    "id": "60",
+    "name": "Straight Arm Pulldown",
+    "bodyPart": "back",
+    "equipment": "cable"
+  },
+  {
+    "id": "61",
+    "name": "Single Arm Lat Pulldown",
+    "bodyPart": "back",
+    "equipment": "cable"
+  },
+  { "id": "62", "name": "Shrugs", "bodyPart": "back", "equipment": "dumbbell" },
+  {
+    "id": "63",
+    "name": "Hyperextension",
+    "bodyPart": "back",
+    "equipment": "bodyweight"
+  },
+
+  {
+    "id": "64",
+    "name": "Smith Machine Squat",
+    "bodyPart": "legs",
+    "equipment": "machine"
+  },
+  {
+    "id": "65",
+    "name": "Walking Lunges",
+    "bodyPart": "legs",
+    "equipment": "dumbbell"
+  },
+  {
+    "id": "66",
+    "name": "Hip Thrust",
+    "bodyPart": "legs",
+    "equipment": "barbell"
+  },
+  {
+    "id": "67",
+    "name": "Glute Bridge",
+    "bodyPart": "legs",
+    "equipment": "bodyweight"
+  },
+  {
+    "id": "68",
+    "name": "Seated Leg Curl",
+    "bodyPart": "legs",
+    "equipment": "machine"
+  },
+  {
+    "id": "69",
+    "name": "Standing Calf Raise",
+    "bodyPart": "legs",
+    "equipment": "machine"
+  },
+  {
+    "id": "70",
+    "name": "Seated Calf Raise",
+    "bodyPart": "legs",
+    "equipment": "machine"
+  },
+  {
+    "id": "71",
+    "name": "Sissy Squat",
+    "bodyPart": "legs",
+    "equipment": "bodyweight"
+  },
+
+  {
+    "id": "72",
+    "name": "Machine Lateral Raise",
+    "bodyPart": "shoulders",
+    "equipment": "machine"
+  },
+  {
+    "id": "73",
+    "name": "Rear Delt Fly Machine",
+    "bodyPart": "shoulders",
+    "equipment": "machine"
+  },
+  {
+    "id": "74",
+    "name": "Cable Front Raise",
+    "bodyPart": "shoulders",
+    "equipment": "cable"
+  },
+
+  {
+    "id": "75",
+    "name": "EZ Bar Curl",
+    "bodyPart": "arms",
+    "equipment": "barbell"
+  },
+  {
+    "id": "76",
+    "name": "Incline Dumbbell Curl",
+    "bodyPart": "arms",
+    "equipment": "dumbbell"
+  },
+  {
+    "id": "77",
+    "name": "Concentration Curl",
+    "bodyPart": "arms",
+    "equipment": "dumbbell"
+  },
+  {
+    "id": "78",
+    "name": "Reverse Curl",
+    "bodyPart": "arms",
+    "equipment": "barbell"
+  },
+  {
+    "id": "79",
+    "name": "Rope Hammer Curl",
+    "bodyPart": "arms",
+    "equipment": "cable"
+  },
+  {
+    "id": "80",
+    "name": "Cable Overhead Tricep Extension",
+    "bodyPart": "arms",
+    "equipment": "cable"
+  },
+  {
+    "id": "81",
+    "name": "Single Arm Tricep Pushdown",
+    "bodyPart": "arms",
+    "equipment": "cable"
+  },
+  {
+    "id": "82",
+    "name": "Bench Dips",
+    "bodyPart": "arms",
+    "equipment": "bodyweight"
+  },
+
+  {
+    "id": "83",
+    "name": "Sit Ups",
+    "bodyPart": "core",
+    "equipment": "bodyweight"
+  },
+  {
+    "id": "84",
+    "name": "Bicycle Crunch",
+    "bodyPart": "core",
+    "equipment": "bodyweight"
+  },
+  {
+    "id": "85",
+    "name": "Side Plank",
+    "bodyPart": "core",
+    "equipment": "bodyweight"
+  },
+  {
+    "id": "86",
+    "name": "Decline Sit Up",
+    "bodyPart": "core",
+    "equipment": "bodyweight"
+  },
+  {
+    "id": "87",
+    "name": "Cable Woodchopper",
+    "bodyPart": "core",
+    "equipment": "cable"
+  },
+
+  {
+    "id": "88",
+    "name": "Farmer's Walk",
+    "bodyPart": "forearms",
+    "equipment": "dumbbell"
+  },
+  {
+    "id": "89",
+    "name": "Wrist Curl",
+    "bodyPart": "forearms",
+    "equipment": "barbell"
+  },
+  {
+    "id": "90",
+    "name": "Reverse Wrist Curl",
+    "bodyPart": "forearms",
+    "equipment": "barbell"
+  },
+
+  {
+    "id": "91",
+    "name": "Barbell Wrist Curl",
+    "bodyPart": "forearms",
+    "equipment": "barbell"
+  },
+  {
+    "id": "92",
+    "name": "Dumbbell Wrist Curl",
+    "bodyPart": "forearms",
+    "equipment": "dumbbell"
+  },
+
+  {
+    "id": "93",
+    "name": "Hip Abduction",
+    "bodyPart": "legs",
+    "equipment": "machine"
+  },
+  {
+    "id": "94",
+    "name": "Hip Adduction",
+    "bodyPart": "legs",
+    "equipment": "machine"
+  },
+
+  {
+    "id": "95",
+    "name": "Smith Machine Shoulder Press",
+    "bodyPart": "shoulders",
+    "equipment": "machine"
+  },
+  {
+    "id": "96",
+    "name": "Smith Machine Incline Bench Press",
+    "bodyPart": "chest",
+    "equipment": "machine"
+  },
+  {
+    "id": "97",
+    "name": "Machine Preacher Curl",
+    "bodyPart": "arms",
+    "equipment": "machine"
+  },
+  {
+    "id": "98",
+    "name": "Machine Tricep Extension",
+    "bodyPart": "arms",
+    "equipment": "machine"
+  },
+  {
+    "id": "99",
+    "name": "Assisted Pull Up",
+    "bodyPart": "back",
+    "equipment": "machine"
+  },
+  {
+    "id": "100",
+    "name": "Assisted Dip",
+    "bodyPart": "chest",
+    "equipment": "machine"
   }
 ]

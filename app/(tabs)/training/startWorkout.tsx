@@ -35,7 +35,7 @@ const StartWorkoutPage = () => {
     queryFn: getWorkouts,
   });
 
-  const { mutate: finishWorkout } = useMutation({
+  const { mutate: finishWorkout, isPending } = useMutation({
     mutationFn: async ({
       totalReps,
       totalWeight,
@@ -266,10 +266,17 @@ const StartWorkoutPage = () => {
               </TouchableOpacity>
               <TouchableOpacity
                 onPress={handleFinishWorkout}
-                className="flex-1 bg-green-600 p-4 rounded-xl items-center flex-row justify-center gap-2"
+                disabled={isPending}
+                className={`flex-1 p-4 rounded-xl items-center flex-row justify-center gap-2 ${isPending ? "bg-green-800 opacity-50" : "bg-green-600"}`}
               >
-                <Ionicons name="checkmark" size={20} color="white" />
-                <Text className="text-white font-bold">Finish Workout</Text>
+                {isPending ? (
+                  <ActivityIndicator size="small" color="white" />
+                ) : (
+                  <Ionicons name="checkmark" size={20} color="white" />
+                )}
+                <Text className="text-white font-bold">
+                  {isPending ? "Saving..." : "Finish Workout"}
+                </Text>
               </TouchableOpacity>
             </View>
           </View>

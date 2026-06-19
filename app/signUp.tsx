@@ -20,9 +20,6 @@ const SignUpPage = () => {
     username: "",
     password: "",
     email: "",
-    age: "",
-    height: "",
-    weight: "",
     gender: "",
   });
   const queryClient = useQueryClient();
@@ -32,9 +29,7 @@ const SignUpPage = () => {
       username,
       password,
       email,
-      age,
-      height,
-      weight,
+
       gender,
     }: any) => {
       const res = await fetch(`${API_URL}/api/auth/signup`, {
@@ -44,9 +39,6 @@ const SignUpPage = () => {
           username,
           password,
           email,
-          age,
-          height,
-          weight,
           gender,
         }),
       });
@@ -118,34 +110,6 @@ const SignUpPage = () => {
                   setFormData({ ...formData, email: text })
                 }
                 value={formData.email}
-              />
-              <TextInput
-                placeholder="Height (cm)"
-                placeholderTextColor="#8E8E93"
-                keyboardType="numeric"
-                className="w-full bg-[#1C2A4A] text-white p-4 rounded-xl"
-                onChangeText={(text) =>
-                  setFormData({ ...formData, height: text })
-                }
-                value={formData.height}
-              />
-              <TextInput
-                placeholder="Weight (kg)"
-                placeholderTextColor="#8E8E93"
-                keyboardType="numeric"
-                className="w-full bg-[#1C2A4A] text-white p-4 rounded-xl"
-                onChangeText={(text) =>
-                  setFormData({ ...formData, weight: text })
-                }
-                value={formData.weight}
-              />
-              <TextInput
-                placeholder="Age"
-                placeholderTextColor="#8E8E93"
-                keyboardType="numeric"
-                className="w-full bg-[#1C2A4A] text-white p-4 rounded-xl"
-                onChangeText={(text) => setFormData({ ...formData, age: text })}
-                value={formData.age}
               />
 
               {/* Gender selection */}
