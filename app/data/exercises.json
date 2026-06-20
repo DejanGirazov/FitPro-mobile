@@ -578,5 +578,17 @@
     "name": "Assisted Dip",
     "bodyPart": "chest",
     "equipment": "machine"
+  },
+  {
+    "id": "101",
+    "name": "Back Extension",
+    "bodyPart": "back",
+    "equipment": "machine"
+  },
+  {
+    "id": "102",
+    "name": "Ab Crunch Machine",
+    "bodyPart": "core",
+    "equipment": "machine"
   }
 ]
