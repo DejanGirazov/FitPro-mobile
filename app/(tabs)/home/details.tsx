@@ -418,9 +418,19 @@ const Details = () => {
                 <Ionicons name="chevron-forward" size={12} color="#00BFFF" />
               </TouchableOpacity>
               {!todaysWorkout ? (
-                <View className="flex-1 justify-center">
-                  <Text className="text-[#8E8E93] text-xs">
-                    No session{"\n"}today.
+                <View className="flex-1 justify-center items-center gap-2">
+                  <Ionicons
+                    name="barbell-outline"
+                    size={28}
+                    color="#1C2A4A"
+                    style={{
+                      backgroundColor: "#0A0F1E",
+                      borderRadius: 50,
+                      padding: 10,
+                    }}
+                  />
+                  <Text className="text-[#8E8E93] text-xs text-center">
+                    No sessions{"\n"}today.
                   </Text>
                 </View>
               ) : (
@@ -469,9 +479,21 @@ const Details = () => {
               <Ionicons name="chevron-forward" size={12} color="#00BFFF" />
             </TouchableOpacity>
             {!todaysCardio ? (
-              <Text className="text-[#8E8E93] text-xs">
-                No cardio session today.
-              </Text>
+              <View className="flex-1 justify-center items-center gap-2">
+                <Ionicons
+                  name="bicycle-outline"
+                  size={28}
+                  color="#1C2A4A"
+                  style={{
+                    backgroundColor: "#0A0F1E",
+                    borderRadius: 50,
+                    padding: 10,
+                  }}
+                />
+                <Text className="text-[#8E8E93] text-xs text-center">
+                  No cardio{"\n"} sessions today.
+                </Text>
+              </View>
             ) : (
               <View className="flex-row justify-between items-center">
                 <View>

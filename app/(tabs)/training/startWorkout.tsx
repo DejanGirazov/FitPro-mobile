@@ -105,7 +105,11 @@ const getPRs = (
   return prs;
 };
 
-const StartWorkoutPage = () => {
+const StartWorkoutPage = ({
+  onWorkoutActiveChange,
+}: {
+  onWorkoutActiveChange: (active: boolean) => void;
+}) => {
   const [selectedWorkout, setSelectedWorkout] = useState<any>({});
   const [editedExercises, setEditedExercises] = useState<any[]>([]);
   const [currentExerciseIndex, setCurrentExerciseIndex] = useState(0);
@@ -159,6 +163,7 @@ const StartWorkoutPage = () => {
       queryClient.invalidateQueries({ queryKey: ["logs"] });
       queryClient.invalidateQueries({ queryKey: ["workouts"] });
       setShowCongrats(true);
+      onWorkoutActiveChange(false); // 👈 add this
     },
   });
 
@@ -184,6 +189,7 @@ const StartWorkoutPage = () => {
       queryClient.invalidateQueries({ queryKey: ["workouts"] });
       // Immediately open add exercise modal so user can build the workout
       setAddExerciseVisible(true);
+      onWorkoutActiveChange(true);
     },
   });
 
@@ -302,6 +308,7 @@ const StartWorkoutPage = () => {
               onPress={() => {
                 setSelectedWorkout({});
                 setCurrentExerciseIndex(0);
+                onWorkoutActiveChange(false); // 👈 add this
               }}
               className="bg-red-600 px-6 py-4 rounded-xl flex-row items-center gap-2"
             >
@@ -420,6 +427,7 @@ const StartWorkoutPage = () => {
                 onPress={() => {
                   setSelectedWorkout({});
                   setCurrentExerciseIndex(0);
+                  onWorkoutActiveChange(false); // 👈 add this
                 }}
                 className="flex-1 bg-red-600 p-4 rounded-xl items-center flex-row justify-center gap-2"
               >
@@ -503,6 +511,7 @@ const StartWorkoutPage = () => {
                       setSelectedWorkout(workout);
                       setEditedExercises(workout.exercises);
                       setWorkoutPickerVisible(false);
+                      onWorkoutActiveChange(true); // 👈 add this
                     }}
                     className="bg-[#1C2A4A] p-4 rounded-xl mb-3"
                   >
