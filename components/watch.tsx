@@ -1,30 +1,65 @@
+import { useWorkoutStore } from "@/app/store/workoutStore";
 import Ionicons from "@expo/vector-icons/Ionicons";
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Text, TouchableOpacity, View } from "react-native";
-import { useStopwatch, useTimer } from "react-timer-hook";
+import { useTimer } from "react-timer-hook";
 import { useTimerNotification } from "./useTimerNotification";
 
-const StopWatch = ({ shouldStart, onTimeUpdate }: any) => {
-  const { seconds, minutes, start, pause, reset } = useStopwatch({
-    autoStart: false,
-  });
+const formatTime = (totalSeconds: number) => {
+  const minutes = Math.floor(totalSeconds / 60);
+  const seconds = totalSeconds % 60;
 
-  useEffect(() => {
-    if (onTimeUpdate) {
-      onTimeUpdate(minutes * 60 + seconds);
+  return `${String(minutes).padStart(2, "0")}:${String(seconds).padStart(2, "0")}`;
+};
+
+const StopWatch = ({ shouldStart }: any) => {
+  const { startTimestamp } = useWorkoutStore();
+
+  const [elapsed, setElapsed] = useState(0);
+  const intervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
+  const startTimer = () => {
+    if (!startTimestamp) return;
+
+    // prevent multiple intervals
+    if (intervalRef.current) clearInterval(intervalRef.current);
+
+    intervalRef.current = setInterval(() => {
+      const diff = Date.now() - startTimestamp;
+      setElapsed(Math.floor(diff / 1000));
+    }, 1000);
+  };
+
+  const stopTimer = () => {
+    if (intervalRef.current) {
+      clearInterval(intervalRef.current);
+      intervalRef.current = null;
     }
-  }, [seconds]);
+  };
 
   useEffect(() => {
-    if (shouldStart?._id) {
-      pause();
-      reset(undefined, false);
-      setTimeout(() => start(), 50);
+    if (shouldStart?._id && startTimestamp) {
+      startTimer();
     } else {
-      pause();
-      reset(undefined, false);
+      stopTimer();
+      setElapsed(0);
     }
-  }, [shouldStart]);
+
+    return () => stopTimer();
+  }, [shouldStart, startTimestamp]);
+
+  // OPTIONAL: handle app background/resume
+  useEffect(() => {
+    const subscription = require("react-native").AppState.addEventListener(
+      "change",
+      (state: string) => {
+        if (state === "active" && shouldStart?._id && startTimestamp) {
+          startTimer();
+        }
+      },
+    );
+
+    return () => subscription.remove();
+  }, [shouldStart, startTimestamp]);
 
   return (
     <View className="items-center">
@@ -36,7 +71,7 @@ const StopWatch = ({ shouldStart, onTimeUpdate }: any) => {
           fontVariant: ["tabular-nums"],
         }}
       >
-        {String(minutes).padStart(2, "0")}:{String(seconds).padStart(2, "0")}
+        {formatTime(elapsed)}
       </Text>
     </View>
   );

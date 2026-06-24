@@ -1,3 +1,4 @@
+import { useWorkoutStore } from "@/app/store/workoutStore";
 import Ionicons from "@expo/vector-icons/Ionicons";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useState } from "react";
@@ -105,13 +106,16 @@ const getPRs = (
   return prs;
 };
 
-const StartWorkoutPage = ({
-  onWorkoutActiveChange,
-}: {
-  onWorkoutActiveChange: (active: boolean) => void;
-}) => {
-  const [selectedWorkout, setSelectedWorkout] = useState<any>({});
-  const [editedExercises, setEditedExercises] = useState<any[]>([]);
+const StartWorkoutPage = () => {
+  const {
+    selectedWorkout,
+    editedExercises,
+    setSelectedWorkout,
+    setEditedExercises,
+    clearSession,
+    setIsWorkoutActive,
+  } = useWorkoutStore();
+
   const [currentExerciseIndex, setCurrentExerciseIndex] = useState(0);
   const [restTime, setRestTime] = useState(120);
   const [totalTime, setTotalTime] = useState(0);
@@ -158,12 +162,12 @@ const StartWorkoutPage = ({
       return data;
     },
     onSuccess: () => {
-      setSelectedWorkout({});
+      clearSession();
       setCurrentExerciseIndex(0);
       queryClient.invalidateQueries({ queryKey: ["logs"] });
       queryClient.invalidateQueries({ queryKey: ["workouts"] });
       setShowCongrats(true);
-      onWorkoutActiveChange(false); // 👈 add this
+      setIsWorkoutActive(false); // 👈 add this
     },
   });
 
@@ -189,7 +193,7 @@ const StartWorkoutPage = ({
       queryClient.invalidateQueries({ queryKey: ["workouts"] });
       // Immediately open add exercise modal so user can build the workout
       setAddExerciseVisible(true);
-      onWorkoutActiveChange(true);
+      setIsWorkoutActive(true);
     },
   });
 
@@ -306,9 +310,9 @@ const StartWorkoutPage = ({
             </TouchableOpacity>
             <TouchableOpacity
               onPress={() => {
-                setSelectedWorkout({});
+                clearSession();
                 setCurrentExerciseIndex(0);
-                onWorkoutActiveChange(false); // 👈 add this
+                setIsWorkoutActive(false); // 👈 add this
               }}
               className="bg-red-600 px-6 py-4 rounded-xl flex-row items-center gap-2"
             >
@@ -425,9 +429,9 @@ const StartWorkoutPage = ({
             <View className="flex-row gap-3">
               <TouchableOpacity
                 onPress={() => {
-                  setSelectedWorkout({});
+                  clearSession();
                   setCurrentExerciseIndex(0);
-                  onWorkoutActiveChange(false); // 👈 add this
+                  setIsWorkoutActive(false); // 👈 add this
                 }}
                 className="flex-1 bg-red-600 p-4 rounded-xl items-center flex-row justify-center gap-2"
               >
@@ -511,7 +515,7 @@ const StartWorkoutPage = ({
                       setSelectedWorkout(workout);
                       setEditedExercises(workout.exercises);
                       setWorkoutPickerVisible(false);
-                      onWorkoutActiveChange(true); // 👈 add this
+                      setIsWorkoutActive(true); // 👈 add this
                     }}
                     className="bg-[#1C2A4A] p-4 rounded-xl mb-3"
                   >

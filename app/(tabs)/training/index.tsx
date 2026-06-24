@@ -1,3 +1,4 @@
+import { useWorkoutStore } from "@/app/store/workoutStore";
 import { Ionicons } from "@expo/vector-icons";
 import { useState } from "react";
 import { Text, TouchableOpacity, View } from "react-native";
@@ -13,8 +14,7 @@ const tabs = [
 ];
 const TrainingPage = () => {
   const [activeTab, setActiveTab] = useState("start");
-  const [isWorkoutActive, setIsWorkoutActive] = useState(false);
-
+  const { isWorkoutActive } = useWorkoutStore();
   return (
     <>
       {!isWorkoutActive && (
@@ -53,9 +53,7 @@ const TrainingPage = () => {
         </SafeAreaView>
       )}
 
-      {activeTab === "start" && (
-        <StartWorkoutPage onWorkoutActiveChange={setIsWorkoutActive} />
-      )}
+      {activeTab === "start" && <StartWorkoutPage />}
       {activeTab === "create" && <CreateWorkoutPage />}
       {activeTab === "stats" && <StatsPage />}
     </>
