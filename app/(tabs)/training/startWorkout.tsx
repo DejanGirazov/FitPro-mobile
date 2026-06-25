@@ -372,7 +372,7 @@ const StartWorkoutPage = () => {
                         updated[currentExerciseIndex].sets.splice(setIndex, 1);
                         setEditedExercises(updated);
                       }}
-                      className="bg-red-600 p-2 rounded-lg"
+                      className="bg-[#0A0F1E] p-2 rounded-lg"
                     >
                       <Ionicons name="trash-outline" size={16} color="white" />
                     </TouchableOpacity>
@@ -433,7 +433,7 @@ const StartWorkoutPage = () => {
                   setCurrentExerciseIndex(0);
                   setIsWorkoutActive(false); // 👈 add this
                 }}
-                className="flex-1 bg-red-600 p-4 rounded-xl items-center flex-row justify-center gap-2"
+                className="flex-1 bg-[#00BFFF] p-4 rounded-xl items-center flex-row justify-center gap-2"
               >
                 <Ionicons name="close" size={20} color="white" />
                 <Text className="text-white font-bold">Close Workout</Text>
@@ -442,7 +442,7 @@ const StartWorkoutPage = () => {
                 onPress={handleFinishWorkout}
                 disabled={isFinishPending}
                 className={`flex-1 p-4 rounded-xl items-center flex-row justify-center gap-2 ${
-                  isFinishPending ? "bg-gray-400" : "bg-green-600"
+                  isFinishPending ? "bg-gray-400" : "bg-[#00BFFF]"
                 }`}
               >
                 {isFinishPending ? (

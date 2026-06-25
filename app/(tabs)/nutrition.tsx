@@ -1,3 +1,4 @@
+import AiNutritionSummary from "@/components/AiSummaryNutrition";
 import FoodDetailModal from "@/components/FoodDetailModal";
 import FoodResultCard from "@/components/foodResultCard";
 import FoodResultCardSkeleton from "@/components/FoodResultCardSkeleton";
@@ -185,6 +186,9 @@ const Nutrition = () => {
               onDelete={() => deleteLog(meal._id)}
             />
           ))
+        )}
+        {todaysMeals && todaysMeals.length > 0 && (
+          <AiNutritionSummary meals={todaysMeals} />
         )}
         <TouchableOpacity
           onPress={() => setCreateModalVisible(true)}
