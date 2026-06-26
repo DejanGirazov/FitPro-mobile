@@ -1,6 +1,7 @@
 import { useWorkoutStore } from "@/app/store/workoutStore";
 import Ionicons from "@expo/vector-icons/Ionicons";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { useRouter } from "expo-router";
 import { useState } from "react";
 import {
   ActivityIndicator,
@@ -211,7 +212,8 @@ const StartWorkoutPage = () => {
       return (
         total +
         exercise.sets.reduce(
-          (sum: number, set: any) => sum + Number(set.weight),
+          (sum: number, set: any) =>
+            sum + Number(set.weight) * Number(set.reps),
           0,
         )
       );
@@ -249,6 +251,7 @@ const StartWorkoutPage = () => {
   );
 
   const isWorkoutSelected = selectedWorkout?._id;
+  const router = useRouter();
 
   return (
     <SafeAreaView className="flex-1 bg-[#0A0F1E]">
@@ -500,13 +503,32 @@ const StartWorkoutPage = () => {
               </View>
             </TouchableOpacity>
 
-            <Text className="text-[#8E8E93] text-xs uppercase tracking-widest mb-3">
-              Or choose a saved workout
-            </Text>
+            {workouts?.length > 0 && (
+              <Text className="text-[#8E8E93] text-xs uppercase tracking-widest mb-3">
+                Or choose a saved workout
+              </Text>
+            )}
 
             <ScrollView>
               {isLoading ? (
                 <ActivityIndicator size="large" color="#00BFFF" />
+              ) : workouts?.length === 0 ? (
+                <View className="items-center py-4 gap-3">
+                  <Text className="text-[#8E8E93] text-center">
+                    {"You don't have any saved workouts yet."}
+                  </Text>
+                  <TouchableOpacity
+                    onPress={() => {
+                      setWorkoutPickerVisible(false);
+                      router.push("/(tabs)/training/createWorkout" as any);
+                    }}
+                    className="bg-[#1C2A4A] px-6 py-3 rounded-xl"
+                  >
+                    <Text className="text-[#00BFFF] font-bold">
+                      Create a Workout
+                    </Text>
+                  </TouchableOpacity>
+                </View>
               ) : (
                 workouts?.map((workout: any) => (
                   <TouchableOpacity
@@ -515,7 +537,7 @@ const StartWorkoutPage = () => {
                       setSelectedWorkout(workout);
                       setEditedExercises(workout.exercises);
                       setWorkoutPickerVisible(false);
-                      setIsWorkoutActive(true); // 👈 add this
+                      setIsWorkoutActive(true);
                     }}
                     className="bg-[#1C2A4A] p-4 rounded-xl mb-3"
                   >

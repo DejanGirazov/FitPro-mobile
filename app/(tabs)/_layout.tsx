@@ -50,7 +50,10 @@ const _layout = () => {
         }}
       />
       <Tabs.Screen name="training/startWorkout" options={{ href: null }} />
-      <Tabs.Screen name="training/createWorkout" options={{ href: null }} />
+      <Tabs.Screen
+        name="training/createWorkout"
+        options={{ href: null, headerShown: false }}
+      />
       <Tabs.Screen name="training/stats" options={{ href: null }} />
       <Tabs.Screen
         name="nutrition"
