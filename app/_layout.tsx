@@ -42,6 +42,7 @@ function RootLayoutNav() {
 
     const inTabsGroup = segments[0] === "(tabs)";
     const inOnboarding = (segments[0] as any) === "onboarding";
+    const isAddMeal = segments[0] === "addMeal"; // add this
 
     const needsOnboarding =
       authUser &&
@@ -56,7 +57,7 @@ function RootLayoutNav() {
       router.replace("/login" as any);
     } else if (authUser && needsOnboarding && !inOnboarding) {
       router.replace("/onboarding" as any);
-    } else if (authUser && !needsOnboarding && !inTabsGroup) {
+    } else if (authUser && !needsOnboarding && !inTabsGroup && !isAddMeal) {
       router.replace("/(tabs)/home" as any);
     }
   }, [authUser, isLoading, segments, mounted]);
@@ -82,6 +83,7 @@ function RootLayoutNav() {
       <Stack.Screen name="login" />
       <Stack.Screen name="signUp" />
       <Stack.Screen name="onboarding" />
+      <Stack.Screen name="addMeal" options={{ headerShown: false }} />
     </Stack>
   );
 }
