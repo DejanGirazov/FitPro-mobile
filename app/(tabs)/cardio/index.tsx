@@ -48,8 +48,24 @@ const CardioPage = () => {
         </View>
       </SafeAreaView>
 
-      {activeTab === "start" && <Cardio />}
-      {activeTab === "stats" && <Stats />}
+      <View style={{ flex: 1 }}>
+        <View
+          style={{
+            flex: 1,
+            display: activeTab === "start" ? "flex" : "none",
+          }}
+        >
+          <Cardio />
+        </View>
+        <View
+          style={{
+            flex: 1,
+            display: activeTab === "stats" ? "flex" : "none",
+          }}
+        >
+          <Stats />
+        </View>
+      </View>
     </>
   );
 };

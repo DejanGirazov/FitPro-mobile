@@ -30,6 +30,14 @@ const AddMealPage = () => {
   const [selectedFoodDetails, setSelectedFoodDetails] = useState<any>(null);
   const [foodModalVisible, setFoodModalVisible] = useState(false);
   const [grams, setGrams] = useState(100);
+  const [manualEntryVisible, setManualEntryVisible] = useState(false);
+  const [manualFood, setManualFood] = useState({
+    name: "",
+    calories: "",
+    protein: "",
+    carbs: "",
+    fat: "",
+  });
 
   const { data: searchResults, isLoading: isSearching } = useQuery({
     queryKey: ["foodSearch", submittedQuery],
@@ -80,6 +88,27 @@ const AddMealPage = () => {
     setSelectedFoodDetails(data);
     setGrams(data.BaseWeight || 100);
     setFoodModalVisible(true);
+  };
+  const handleAddManualFood = () => {
+    if (!manualFood.name || !manualFood.calories) return;
+
+    setConfirmedFoods((prev) => [
+      ...prev,
+      {
+        id: `manual-${Date.now()}`, // unique local id, no externalFoodId since it's not from DB
+        name: manualFood.name,
+        externalFoodId: `manual-${Date.now()}`,
+        quantity: 1,
+        unit: "g",
+        calories: parseFloat(manualFood.calories) || 0,
+        protein: parseFloat(manualFood.protein) || 0,
+        carbs: parseFloat(manualFood.carbs) || 0,
+        fat: parseFloat(manualFood.fat) || 0,
+      },
+    ]);
+
+    setManualFood({ name: "", calories: "", protein: "", carbs: "", fat: "" });
+    setManualEntryVisible(false);
   };
 
   return (
@@ -254,6 +283,95 @@ const AddMealPage = () => {
             </>
           )}
         </ScrollView>
+        {/* Manual Entry Link */}
+        {!manualEntryVisible ? (
+          <TouchableOpacity
+            onPress={() => setManualEntryVisible(true)}
+            className="flex-row items-center justify-center gap-2 mt-4 p-3"
+          >
+            <Ionicons name="add-circle-outline" size={18} color="#00BFFF" />
+            <Text className="text-[#00BFFF] text-sm font-bold">
+              {"Can't find it? Add manually"}
+            </Text>
+          </TouchableOpacity>
+        ) : (
+          <View className="bg-[#1C2A4A] rounded-xl p-4 mt-4">
+            <View className="flex-row justify-between items-center mb-3">
+              <Text className="text-[#00BFFF] font-bold uppercase tracking-widest text-sm">
+                Manual Entry
+              </Text>
+              <TouchableOpacity onPress={() => setManualEntryVisible(false)}>
+                <Ionicons name="close" size={20} color="#8E8E93" />
+              </TouchableOpacity>
+            </View>
+
+            <TextInput
+              placeholder="Food name"
+              placeholderTextColor="#8E8E93"
+              className="bg-[#0A0F1E] text-white p-3 rounded-xl mb-2"
+              value={manualFood.name}
+              onChangeText={(text) =>
+                setManualFood({ ...manualFood, name: text })
+              }
+            />
+
+            <TextInput
+              placeholder="Calories (kcal)"
+              placeholderTextColor="#8E8E93"
+              keyboardType="numeric"
+              className="bg-[#0A0F1E] text-white p-3 rounded-xl mb-2"
+              value={manualFood.calories}
+              onChangeText={(text) =>
+                setManualFood({ ...manualFood, calories: text })
+              }
+            />
+
+            <View className="flex-row gap-2 mb-2">
+              <TextInput
+                placeholder="Protein (g)"
+                placeholderTextColor="#8E8E93"
+                keyboardType="numeric"
+                className="flex-1 bg-[#0A0F1E] text-white p-3 rounded-xl"
+                value={manualFood.protein}
+                onChangeText={(text) =>
+                  setManualFood({ ...manualFood, protein: text })
+                }
+              />
+              <TextInput
+                placeholder="Carbs (g)"
+                placeholderTextColor="#8E8E93"
+                keyboardType="numeric"
+                className="flex-1 bg-[#0A0F1E] text-white p-3 rounded-xl"
+                value={manualFood.carbs}
+                onChangeText={(text) =>
+                  setManualFood({ ...manualFood, carbs: text })
+                }
+              />
+              <TextInput
+                placeholder="Fat (g)"
+                placeholderTextColor="#8E8E93"
+                keyboardType="numeric"
+                className="flex-1 bg-[#0A0F1E] text-white p-3 rounded-xl"
+                value={manualFood.fat}
+                onChangeText={(text) =>
+                  setManualFood({ ...manualFood, fat: text })
+                }
+              />
+            </View>
+
+            <TouchableOpacity
+              onPress={handleAddManualFood}
+              disabled={!manualFood.name || !manualFood.calories}
+              className={`p-3 rounded-xl items-center mt-1 ${
+                !manualFood.name || !manualFood.calories
+                  ? "bg-[#0A0F1E] opacity-40"
+                  : "bg-[#00BFFF]"
+              }`}
+            >
+              <Text className="text-white font-bold">Add Food</Text>
+            </TouchableOpacity>
+          </View>
+        )}
 
         {/* Bottom Buttons */}
         <View

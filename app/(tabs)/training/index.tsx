@@ -53,9 +53,23 @@ const TrainingPage = () => {
         </SafeAreaView>
       )}
 
-      {activeTab === "start" && <StartWorkoutPage />}
-      {activeTab === "create" && <CreateWorkoutPage />}
-      {activeTab === "stats" && <StatsPage />}
+      <View style={{ flex: 1 }}>
+        <View
+          style={{ flex: 1, display: activeTab === "create" ? "flex" : "none" }}
+        >
+          <CreateWorkoutPage />
+        </View>
+        <View
+          style={{ flex: 1, display: activeTab === "start" ? "flex" : "none" }}
+        >
+          <StartWorkoutPage />
+        </View>
+        <View
+          style={{ flex: 1, display: activeTab === "stats" ? "flex" : "none" }}
+        >
+          <StatsPage />
+        </View>
+      </View>
     </>
   );
 };
