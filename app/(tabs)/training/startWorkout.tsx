@@ -2,7 +2,7 @@ import { useWorkoutStore } from "@/app/store/workoutStore";
 import Ionicons from "@expo/vector-icons/Ionicons";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useRouter } from "expo-router";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
   ActivityIndicator,
   KeyboardAvoidingView,
@@ -19,6 +19,19 @@ import { StopWatch, Timer } from "../../../components/watch";
 import WorkoutCompleteModal from "../../../components/WorkoutCompleteModal";
 import { API_URL } from "../../../constants/api";
 import exercises from "./../../data/exercises.json";
+
+const formatTime = (totalSeconds: number) => {
+  const minutes = Math.floor(totalSeconds / 60);
+  const seconds = totalSeconds % 60;
+
+  return `${minutes}:${String(seconds).padStart(2, "0")}`;
+};
+
+const parseTime = (time: string) => {
+  const [minutes = "0", seconds = "0"] = time.split(":");
+
+  return (parseInt(minutes, 10) || 0) * 60 + (parseInt(seconds, 10) || 0);
+};
 
 const getWorkouts = async () => {
   const res = await fetch(`${API_URL}/api/workout/getWorkouts`);
@@ -118,7 +131,7 @@ const StartWorkoutPage = () => {
   } = useWorkoutStore();
 
   const [currentExerciseIndex, setCurrentExerciseIndex] = useState(0);
-  const [restTime, setRestTime] = useState(120);
+  const [restTime, setRestTime] = useState(180);
   const [totalTime, setTotalTime] = useState(0);
   const [workoutPickerVisible, setWorkoutPickerVisible] = useState(false);
   const [addExerciseVisible, setAddExerciseVisible] = useState(false);
@@ -130,6 +143,11 @@ const StartWorkoutPage = () => {
   const [showCongrats, setShowCongrats] = useState(false);
   const [prExercises, setPrExercises] = useState<any[]>([]);
   const [finishedStats, setFinishedStats] = useState<any>({});
+  const [restTimeInput, setRestTimeInput] = useState(formatTime(restTime));
+
+  useEffect(() => {
+    setRestTimeInput(formatTime(restTime));
+  }, [restTime]);
 
   const queryClient = useQueryClient();
   const { data: workouts, isLoading } = useQuery({
@@ -287,10 +305,13 @@ const StartWorkoutPage = () => {
             <View className="flex-row items-center justify-between mt-4">
               <Text className="text-white font-bold">Rest Time (seconds):</Text>
               <TextInput
-                keyboardType="numeric"
-                value={String(restTime)}
-                onChangeText={(text) => setRestTime(parseInt(text) || 0)}
-                className="bg-[#0A0F1E] text-white p-2 rounded-lg w-20 text-center"
+                value={restTimeInput}
+                onChangeText={(text) => {
+                  setRestTimeInput(text);
+                  setRestTime(parseTime(text));
+                }}
+                keyboardType="numbers-and-punctuation"
+                className="bg-[#0A0F1E] text-white p-2 rounded-lg w-24 text-center"
               />
             </View>
             <Timer expirySeconds={restTime} />
