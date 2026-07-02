@@ -333,14 +333,33 @@ const StartWorkoutPage = () => {
             </Text>
 
             <View className="bg-[#1C2A4A] p-4 rounded-xl mb-4">
+              {/* Exercise name */}
+              <View className="mb-3">
+                <Text className="text-white font-bold text-base">
+                  {editedExercises[currentExerciseIndex]?.exerciseName}
+                </Text>
+              </View>
+
+              {/* Column labels */}
+              <View className="flex-row items-center gap-2 mb-1">
+                <Text className="text-[#8E8E93] text-xs w-6">#</Text>
+                <Text className="text-[#8E8E93] text-xs flex-1 text-center">
+                  Reps
+                </Text>
+                <Text className="text-[#8E8E93] text-xs flex-1 text-center">
+                  Weight (kg)
+                </Text>
+                <View style={{ width: 26 }} />
+              </View>
+
               {editedExercises[currentExerciseIndex]?.sets.map(
                 (set: any, setIndex: number) => (
                   <View
                     key={setIndex}
                     className="flex-row items-center gap-2 mb-2"
                   >
-                    <Text className="text-white">Set {setIndex + 1}</Text>
-                    <Text className="text-[#8E8E93]">Reps:</Text>
+                    <Text className="text-[#8E8E93] w-6">{setIndex + 1}</Text>
+
                     <TextInput
                       keyboardType="numeric"
                       value={String(set.reps)}
@@ -350,9 +369,9 @@ const StartWorkoutPage = () => {
                           text;
                         setEditedExercises(updated);
                       }}
-                      className="bg-[#0A0F1E] text-white p-2 rounded-lg w-14 text-center"
+                      className="bg-[#0A0F1E] text-white p-2 rounded-lg flex-1 text-center"
                     />
-                    <Text className="text-[#8E8E93]">Weight:</Text>
+
                     <TextInput
                       keyboardType="numeric"
                       value={String(set.weight)}
@@ -362,18 +381,23 @@ const StartWorkoutPage = () => {
                           text;
                         setEditedExercises(updated);
                       }}
-                      className="bg-[#0A0F1E] text-white p-2 rounded-lg w-14 text-center"
+                      className="bg-[#0A0F1E] text-white p-2 rounded-lg flex-1 text-center"
                     />
-                    <Text className="text-[#8E8E93]">kg</Text>
+
                     <TouchableOpacity
                       onPress={() => {
                         const updated = [...editedExercises];
                         updated[currentExerciseIndex].sets.splice(setIndex, 1);
                         setEditedExercises(updated);
                       }}
-                      className="bg-[#0A0F1E] p-2 rounded-lg"
+                      hitSlop={8}
+                      style={{ width: 26, alignItems: "center" }}
                     >
-                      <Ionicons name="trash-outline" size={16} color="white" />
+                      <Ionicons
+                        name="trash-outline"
+                        size={18}
+                        color="#8E8E93"
+                      />
                     </TouchableOpacity>
                   </View>
                 ),
@@ -388,9 +412,9 @@ const StartWorkoutPage = () => {
                   });
                   setEditedExercises(updated);
                 }}
-                className="bg-[#0A0F1E] p-3 rounded-lg items-center mt-2"
+                className="bg-[#0A0F1E] p-2 rounded-lg items-center mt-1"
               >
-                <Text className="text-[#00BFFF]">+ Add Set</Text>
+                <Text className="text-[#00BFFF] text-sm">+ Add Set</Text>
               </TouchableOpacity>
             </View>
 
