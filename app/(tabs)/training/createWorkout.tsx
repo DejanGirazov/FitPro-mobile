@@ -33,6 +33,8 @@ const CreateWorkoutPage = () => {
   const [selectedWorkout, setSelectedWorkout] = useState<any>({});
   const [createModalVisible, setCreateModalVisible] = useState(false);
   const [editModalVisible, setEditModalVisible] = useState(false);
+  const [addExerciseVisible, setAddExerciseVisible] = useState(false);
+  const [editSearchExercise, setEditSearchExercise] = useState("");
 
   const {
     data: workouts,
@@ -99,6 +101,28 @@ const CreateWorkoutPage = () => {
   const filteredExercises = exercises.filter((ex) =>
     ex.name.toLowerCase().includes(searchExercise.toLowerCase()),
   );
+  const filteredEditExercises = exercises.filter(
+    (ex) =>
+      ex.name.toLowerCase().includes(editSearchExercise.toLowerCase()) &&
+      !editedExercises.some((e: any) => e.exerciseId === ex.id),
+  );
+
+  const handleRemoveExerciseFromEdit = (index: number) => {
+    const updated = [...editedExercises];
+    updated.splice(index, 1);
+    setEditedExercises(updated);
+  };
+
+  const handleAddExerciseToEdit = (exercise: any) => {
+    setEditedExercises([
+      ...editedExercises,
+      {
+        exerciseId: exercise.id,
+        exerciseName: exercise.name,
+        sets: [{ reps: 0, weight: 0 }],
+      },
+    ]);
+  };
 
   const handleAddExercises = () => {
     const formattedExercises = selectedExercises.map((ex: any) => ({
@@ -136,6 +160,8 @@ const CreateWorkoutPage = () => {
                   onPress={() => {
                     setSelectedWorkout(workout);
                     setEditedExercises(workout.exercises);
+                    setAddExerciseVisible(false);
+                    setEditSearchExercise("");
                     setEditModalVisible(true);
                   }}
                   className="bg-[#0A0F1E] px-3 py-2 rounded-lg"
@@ -144,7 +170,7 @@ const CreateWorkoutPage = () => {
                 </TouchableOpacity>
                 <TouchableOpacity
                   onPress={() => deleteWorkout(workout._id)}
-                  className="bg-red-600 px-3 py-2 rounded-lg"
+                  className="bg-black px-3 py-2 rounded-lg"
                 >
                   <Ionicons name="trash-outline" size={18} color="white" />
                 </TouchableOpacity>
@@ -301,19 +327,41 @@ const CreateWorkoutPage = () => {
             <ScrollView style={{ maxHeight: 400 }}>
               {editedExercises.map((exercise: any, index: number) => (
                 <View
-                  key={exercise._id}
+                  key={exercise.exerciseId ?? index}
                   className="bg-[#1C2A4A] p-4 rounded-xl mb-3"
                 >
-                  <Text className="text-white font-bold mb-2">
-                    {exercise.exerciseName}
-                  </Text>
+                  {/* Exercise header — remove-exercise is a ghost icon, visually
+        distinct from the per-set trash icons below */}
+                  <View className="flex-row items-center justify-between mb-3">
+                    <Text className="text-white font-bold text-base flex-1 mr-2">
+                      {exercise.exerciseName}
+                    </Text>
+                    <TouchableOpacity
+                      onPress={() => handleRemoveExerciseFromEdit(index)}
+                      hitSlop={8}
+                    >
+                      <Ionicons name="close-circle" size={22} color="#E63946" />
+                    </TouchableOpacity>
+                  </View>
+
+                  {/* Column labels */}
+                  <View className="flex-row items-center gap-2 mb-1">
+                    <Text className="text-[#8E8E93] text-xs w-6">#</Text>
+                    <Text className="text-[#8E8E93] text-xs flex-1 text-center">
+                      Reps
+                    </Text>
+                    <Text className="text-[#8E8E93] text-xs flex-1 text-center">
+                      Weight (kg)
+                    </Text>
+                    <View style={{ width: 26 }} />
+                  </View>
+
                   {exercise.sets.map((set: any, setIndex: number) => (
                     <View
                       key={setIndex}
                       className="flex-row items-center gap-2 mb-2"
                     >
-                      <Text className="text-white">Set {setIndex + 1}</Text>
-                      <Text className="text-[#8E8E93]">Reps:</Text>
+                      <Text className="text-[#8E8E93] w-6">{setIndex + 1}</Text>
                       <TextInput
                         keyboardType="numeric"
                         value={String(set.reps)}
@@ -322,9 +370,8 @@ const CreateWorkoutPage = () => {
                           updated[index].sets[setIndex].reps = text;
                           setEditedExercises(updated);
                         }}
-                        className="bg-[#0A0F1E] text-white p-2 rounded-lg w-14 text-center"
+                        className="bg-[#0A0F1E] text-white p-2 rounded-lg flex-1 text-center"
                       />
-                      <Text className="text-[#8E8E93]">Weight:</Text>
                       <TextInput
                         keyboardType="numeric"
                         value={String(set.weight)}
@@ -333,38 +380,92 @@ const CreateWorkoutPage = () => {
                           updated[index].sets[setIndex].weight = text;
                           setEditedExercises(updated);
                         }}
-                        className="bg-[#0A0F1E] text-white p-2 rounded-lg w-14 text-center"
+                        className="bg-[#0A0F1E] text-white p-2 rounded-lg flex-1 text-center"
                       />
-                      <Text className="text-[#8E8E93]">kg</Text>
                       <TouchableOpacity
                         onPress={() => {
                           const updated = [...editedExercises];
                           updated[index].sets.splice(setIndex, 1);
                           setEditedExercises(updated);
                         }}
-                        className="bg-red-600 p-2 rounded-lg"
+                        hitSlop={8}
+                        style={{ width: 26, alignItems: "center" }}
                       >
                         <Ionicons
                           name="trash-outline"
-                          size={16}
-                          color="white"
+                          size={18}
+                          color="#8E8E93"
                         />
                       </TouchableOpacity>
                     </View>
                   ))}
+
                   <TouchableOpacity
                     onPress={() => {
                       const updated = [...editedExercises];
                       updated[index].sets.push({ reps: 0, weight: 0 });
                       setEditedExercises(updated);
                     }}
-                    className="bg-[#0A0F1E] p-2 rounded-lg items-center mt-2"
+                    className="bg-[#0A0F1E] p-2 rounded-lg items-center mt-1"
                   >
-                    <Text className="text-[#00BFFF]">+ Add Set</Text>
+                    <Text className="text-[#00BFFF] text-sm">+ Add Set</Text>
                   </TouchableOpacity>
                 </View>
               ))}
+              {editedExercises.length === 0 && (
+                <Text className="text-[#8E8E93] text-center my-4">
+                  No exercises left. Add one below.
+                </Text>
+              )}
             </ScrollView>
+
+            {/* Add Exercise */}
+            <TouchableOpacity
+              onPress={() => setAddExerciseVisible(!addExerciseVisible)}
+              className="flex-row justify-center items-center gap-2 bg-[#1C2A4A] p-3 rounded-xl mt-4"
+            >
+              <Ionicons
+                name={addExerciseVisible ? "chevron-up" : "add"}
+                size={18}
+                color="#00BFFF"
+              />
+              <Text className="text-[#00BFFF] font-bold uppercase tracking-widest">
+                {addExerciseVisible ? "Hide Exercises" : "Add Exercise"}
+              </Text>
+            </TouchableOpacity>
+
+            {addExerciseVisible && (
+              <View className="mt-3">
+                <TextInput
+                  placeholder="Search exercises..."
+                  placeholderTextColor="#8E8E93"
+                  className="bg-[#1C2A4A] text-white p-4 rounded-xl mb-2"
+                  value={editSearchExercise}
+                  onChangeText={setEditSearchExercise}
+                />
+                <ScrollView style={{ maxHeight: 200 }}>
+                  {filteredEditExercises.map((exercise: any) => (
+                    <TouchableOpacity
+                      key={exercise.id}
+                      onPress={() => handleAddExerciseToEdit(exercise)}
+                      className="flex-row items-center gap-3 p-3 mb-1"
+                    >
+                      <Ionicons
+                        name="add-circle-outline"
+                        size={22}
+                        color="#00BFFF"
+                      />
+                      <Text className="text-white">{exercise.name}</Text>
+                    </TouchableOpacity>
+                  ))}
+                  {filteredEditExercises.length === 0 && (
+                    <Text className="text-[#8E8E93] text-center my-2">
+                      No matching exercises.
+                    </Text>
+                  )}
+                </ScrollView>
+              </View>
+            )}
 
             <View className="flex-row gap-3 mt-4">
               <TouchableOpacity
@@ -375,7 +476,8 @@ const CreateWorkoutPage = () => {
               </TouchableOpacity>
               <TouchableOpacity
                 onPress={() => updateWorkout({ exercises: editedExercises })}
-                className="flex-1 bg-[#00BFFF] p-4 rounded-xl items-center"
+                disabled={editedExercises.length === 0}
+                className={`flex-1 p-4 rounded-xl items-center ${editedExercises.length === 0 ? "bg-[#1C2A4A] opacity-40" : "bg-[#00BFFF]"}`}
               >
                 <Text className="text-white font-bold">Save Changes</Text>
               </TouchableOpacity>

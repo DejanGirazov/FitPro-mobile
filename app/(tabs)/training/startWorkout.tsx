@@ -329,14 +329,10 @@ const StartWorkoutPage = () => {
         {isWorkoutSelected && editedExercises.length > 0 && (
           <View>
             <Text className="text-white text-2xl font-bold mb-4">
-              {selectedWorkout?.title}
+              {editedExercises[currentExerciseIndex]?.exerciseName}
             </Text>
 
             <View className="bg-[#1C2A4A] p-4 rounded-xl mb-4">
-              <Text className="text-white text-xl font-bold mb-3">
-                {editedExercises[currentExerciseIndex]?.exerciseName}
-              </Text>
-
               {editedExercises[currentExerciseIndex]?.sets.map(
                 (set: any, setIndex: number) => (
                   <View
